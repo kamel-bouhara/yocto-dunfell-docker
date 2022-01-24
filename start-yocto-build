@@ -5,11 +5,11 @@ set -e
 CONTAINER_NAME="yocto-dunfell-docker"
 MY_UID=$(id -u)
 MY_GID=$(id -g)
-DOCKER_EXEC_ARGS="--user ${MY_UID}:${MY_GID} --workdir /home/devuser/yocto \
-	-v /home/$USER/.ssh:/home/devuser/.ssh -v$(pwd)/yocto:/home/devuser/yocto"
+DOCKER_EXEC_ARGS="--user ${MY_UID}:${MY_GID} --workdir /home/devuser/ \
+	-v /home/$USER/.ssh:/home/devuser/.ssh -v$(pwd)/:/home/devuser/"
 
-[[ "$(docker images -q $CONTAINER_NAME)" == "" ]] &&\
+[[ "$(docker images -q ${CONTAINER_NAME})" == "" ]] && \
 	docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) \
-	-t $CONTAINER_NAME yocto-dunfell-docker/docker/
+	-t ${CONTAINER_NAME} yocto-dunfell-docker/docker/
 
 docker run -it --rm ${DOCKER_EXEC_ARGS} "${CONTAINER_NAME}" /bin/bash

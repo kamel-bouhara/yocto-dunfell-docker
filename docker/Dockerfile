@@ -19,12 +19,9 @@ ARG GID=1000
 RUN echo "Adding new user $UNAME id=$UID gid=$GID"
 RUN addgroup --gid $GID $UNAME
 RUN adduser --disabled-password --gecos '' --uid $UID --gid $GID $UNAME
-RUN mkdir -p /home/devuser/yocto
-RUN chown -R devuser:devuser /home/devuser/yocto
-ARG USER devuser
 COPY init /
 
-USER $UNAME
+USER devuser
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
